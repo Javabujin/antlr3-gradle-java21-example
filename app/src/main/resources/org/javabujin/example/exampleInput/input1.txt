@@ -1,0 +1,8 @@
+zero = 0
+one = 1
+two = one + one
+three = two + one
+four = two * two
+five = one * 5
+six = three * two
+six * five

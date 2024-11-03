@@ -3,12 +3,47 @@
  */
 package org.javabujin.example;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import java.io.InputStream;
+import java.util.Objects;
+import java.util.logging.Logger;
+import org.antlr.runtime.*;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.CommonTreeNodeStream;
+import org.javabujin.example.antlr.*;
 
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        // Use a logger as to-screen output.
+        Logger logger = Logger.getLogger(App.class.getName());
+
+        // Run the lexer on the example input file.
+        try {
+            // Use the class loader to get the resource as a stream.
+            InputStream inputStream = Objects.requireNonNull(
+                    App.class.getResourceAsStream("exampleInput/input1.txt"));
+
+            // Test the input stream.
+            ANTLRInputStream input = new ANTLRInputStream(inputStream);
+            ArithmeticLexer lexer = new ArithmeticLexer(input);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            ArithmeticParser parser = new ArithmeticParser(tokens);
+            ArithmeticParser.prog_return result = parser.prog();
+
+            // Walk the tree.
+            // First, get the tree from the result.
+            CommonTree tree = result.getTree();
+
+            // Create a tree node stream from the tree
+            CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
+
+            // Create a tree parser.
+            ArithmeticTreeParser walker = new ArithmeticTreeParser(nodes);
+
+            // Walk the tree from the root (prog) rule.
+            walker.prog();
+        } catch (Exception e) {
+            logger.info("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }

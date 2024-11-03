@@ -28,6 +28,10 @@ An example ANTLR3 project, using Gradle (Kotlin DSL) and Java 21 for modern deve
 - `./gradle generateTestGrammarSource` - Generate the ANTLR test sources.
 - `./gradlew generateSourceSetGrammarSource` - Generate the ANTLR source set sources.
 
+## The example language
+
+- The example language is a simple "calculator" language (based on the Arithmetic Expression example from the Definitive ANTLR 3 Reference).
+
 ## Notes
 
 - ANTLR 3 grammars are placed in the `app/src/main/antlr` directory.

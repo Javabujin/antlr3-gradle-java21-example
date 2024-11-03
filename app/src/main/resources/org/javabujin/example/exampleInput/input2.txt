@@ -1,0 +1,5 @@
+i = 1234
+j = 4321
+ij = i + j
+ijij = ij + ij
+ijij
